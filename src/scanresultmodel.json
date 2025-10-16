@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": ["status", "scannedFiles", "features"],
+  "properties": {
+    "status": {
+      "type": "string"
+    },
+    "scannedFiles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["featureId", "title", "supported", "unsupported", "versions", "occurrences"],
+        "properties": {
+          "featureId": { "type": "string" },
+          "title": { "type": "string" },
+          "supported": { "type": "boolean" },
+          "unsupported": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "versions": {
+            "type": "object",
+            "additionalProperties": { "type": "string" }
+          },
+          "occurrences": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["file", "line", "keyword"],
+              "properties": {
+                "file": { "type": "string" },
+                "line": { "type": "integer" },
+                "keyword": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
