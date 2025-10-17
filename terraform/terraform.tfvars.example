@@ -1,0 +1,71 @@
+# AWS and project basics
+account_id          = "123456789012"
+aws_region          = "us-east-1"
+environment         = "dev"
+project_name        = "my-awesome-project"
+
+# API Gateway configuration
+api_gateway         = "my-api-gateway"
+pathpart            = "example-path"
+req_model           = "request-model-name"
+infer_lambda        = "lambda-infer-function"
+worker_lambda       = "lambda-worker-function"
+cw_api_lg           = "cloudwatch-log-group-apigw"
+usage_plan_name     = "my-api-usage-plan"
+burst_limit         = 100
+rate_limit          = 50
+quota_limit         = 1000
+quota_period        = "DAY"
+apikey_name         = "example-api-key"
+
+# CloudWatch and security
+br_gr_name          = "bedrock-group"
+sec_trails_name     = "security-trails"
+cw_secret_lg        = "cw-log-secret"
+cw_lg_role          = "cw-role"
+cw_lg_apigw         = "cw-log-apigw"
+cw_lg_welcome       = "cw-log-welcome"
+cw_lg_bedrock       = "cw-log-bedrock"
+cw_lg_infer         = "cw-log-infer"
+cw_lg_worker        = "cw-log-worker"
+cw_lg_secretstrail  = "cw-log-secretstrail"
+cw_lg_waf           = "cw-log-waf"
+cw_ls_bedrock       = "cw-log-stream-bedrock"
+iam_api_cw_role     = "iam-role-api-cloudwatch"
+iam_lambda_role     = "iam-role-lambda"
+cw_br_role          = "cw-bedrock-role"
+cw_br_pol           = "cw-bedrock-policy"
+cw_st_role          = "cw-secrettrail-role"
+cw_st_pol           = "cw-secrettrail-policy"
+
+# WAF configuration
+waf_metric_name     = "waf-metric"
+waf_limit           = 2000
+waf_agg_type        = "IP"
+waf_eval_window     = 5
+waf_webacl_name     = "my-web-acl"
+
+# Secrets Manager & API Gateway integration
+sm_br_api_key       = "sm-bedrock-api-key-name"
+gw_invoke_id        = "invoke-id-1234"
+api_id              = "api-123456"
+kms_master_key_id   = "alias/my-kms-key"
+
+# S3 and Lambda configuration
+scanora_bucket_name = "my-scanora-bucket"
+lambda_infer_role   = "lambda-infer-role"
+lambda_invoke       = "lambda-invoke-arn"
+sm_br_policy        = "sm-bedrock-policy"
+lambda_exec_role    = "lambda-exec-role"
+lambda_infer_api    = "lambda-infer-api-name"
+lambda_infer_s3     = "lambda-infer-s3-function"
+
+# Secrets & storage
+sm_secret           = "my-secret-name"
+s3_json_folder      = "json/"
+s3_resp_folder      = "responses/"
+s3_presigned_expiry = 3600
+
+# Model & CloudTrail
+br_model            = "bedrock-model-id"
+ct_bucket_name      = "cloudtrail-logs-bucket"
