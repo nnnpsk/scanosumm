@@ -1,4 +1,4 @@
-# Scanora — WebFeature Scan: Browser Compatibility Reporter
+# Scanora — WebFeature Scan: Claude-Powered Browser Compatibility Reporter
 
 This repository contains Terraform and Lambda code used to extend the Scanora web feature scan tool with an automated HTML compatibility report generator driven by large models hosted via AWS Bedrock (example: Anthropic Claude via Bedrock).
 
