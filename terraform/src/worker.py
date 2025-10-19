@@ -71,7 +71,7 @@ def lambda_handler(event, context):
     ### HTML Structure:
 
     - Add a main header at the top, centered and underlined:  
-    **Scanora - Feature Scan & Browser Compatibility Report**
+    **WebFeaturesScan & Browser Compatibility Report**
 
     - Add a below section 
     **Section 1: Feature Scan Report**
@@ -190,4 +190,5 @@ def lambda_handler(event, context):
         pass
 
     return {"status": "completed", "html_s3_key": s3_key_html}
+
 
