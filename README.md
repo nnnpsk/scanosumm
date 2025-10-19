@@ -172,7 +172,7 @@ graph TB
     class CloudWatch,CloudTrail monitorStyle
     class IAM iamStyle
 ```
-## Architecture Flow Description
+## End-to-End Flow Description
 
 ### 1. Request Processing Flow
 1. **Client Request**: External API client sends HTTPS POST request to `/scan` endpoint with API key
