@@ -63,3 +63,7 @@ After import, run `terraform plan` to see differences. Edit HCL if needed and ru
 - Calls `bedrock-runtime` Converse API (`client.converse`) with the chosen model (provided via `BR_MODEL_ID` environment variable).
 - Writes the resulting HTML to a temp file and uploads it to S3 (replacing the placeholder page uploaded earlier).
 - In case of any errors/exception an Internal error occured page will be resulted in the web page.
+
+## Demo
+
+[![Watch the demo](https://img.youtube.com/vi/Q7meXCWdEsA/hqdefault.jpg)](https://www.youtube.com/watch?v=3LAqHAcc06I)
