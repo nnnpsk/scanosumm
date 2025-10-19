@@ -104,7 +104,7 @@ def lambda_handler(event, context):
     - Add a footer:
     - Center-aligned
     - Smaller font
-    - Text: © {current_year} Scanora
+    - Text: © {current_year} WebFeaturesScanReport
 
     ### Styling Rules (must be embedded in `<style>`):
 
@@ -190,3 +190,4 @@ def lambda_handler(event, context):
         pass
 
     return {"status": "completed", "html_s3_key": s3_key_html}
+
