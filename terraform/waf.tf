@@ -45,3 +45,8 @@ resource "aws_wafv2_web_acl" "wafv2_web_acl_scanora_webacl" {
     ignore_changes = [rule]
   }
 }
+
+resource "aws_wafv2_web_acl_association" "api_assoc" {
+  resource_arn = aws_api_gateway_stage.prod.arn
+  web_acl_arn  = aws_wafv2_web_acl.wafv2_web_acl_scanora_webacl.arn
+}
