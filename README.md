@@ -172,3 +172,28 @@ graph TB
     class CloudWatch,CloudTrail monitorStyle
     class IAM iamStyle
 ```
+## Architecture Flow Description
+
+### 1. Request Processing Flow
+1. **Client Request**: External API client sends HTTPS POST request to `/scan` endpoint with API key
+2. **Security Layer**: AWS WAF applies rate limiting and security filtering
+3. **API Gateway**: Validates request format, authenticates API key, applies usage plan limits
+4. **Inference Lambda**: Processes request, stores input to S3, generates presigned URLs, invokes Worker Lambda
+5. **Worker Lambda**: Retrieves secrets, processes document via Bedrock, stores results
+
+### 2. AI Processing Flow
+- **Bedrock Integration**: Worker Lambda calls Amazon Bedrock for AI processing
+- **Content Filtering**: All AI responses filtered through Bedrock Guardrails
+- **Result Storage**: Processed results stored back to S3 bucket
+
+### 3. Security & Compliance
+- **Authentication**: API key-based authentication at API Gateway
+- **Authorization**: IAM roles with least privilege access
+- **Encryption**: Data encrypted at rest (S3, Secrets Manager) and in transit (HTTPS/TLS)
+- **Audit Trail**: Complete API audit logging via CloudTrail
+
+### 4. Monitoring & Observability
+- **Centralized Logging**: All services log to CloudWatch
+- **Performance Monitoring**: Lambda metrics, API Gateway metrics, Bedrock metrics
+- **Security Monitoring**: WAF logs, CloudTrail audit logs
+- **Cost Optimization**: Usage plans for API cost control
