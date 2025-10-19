@@ -66,4 +66,4 @@ After import, run `terraform plan` to see differences. Edit HCL if needed and ru
 
 ## Demo
 
-[![Watch the demo](https://img.youtube.com/vi/Q7meXCWdEsA/hqdefault.jpg)](https://www.youtube.com/watch?v=3LAqHAcc06I)
+[![Watch the demo](https://img.youtube.com/vi/3LAqHAcc06I/hqdefault.jpg)](https://www.youtube.com/watch?v=3LAqHAcc06I)
