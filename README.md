@@ -67,3 +67,108 @@ After import, run `terraform plan` to see differences. Edit HCL if needed and ru
 ## Demo
 
 [![Watch the demo](https://img.youtube.com/vi/3LAqHAcc06I/hqdefault.jpg)](https://www.youtube.com/watch?v=3LAqHAcc06I)
+
+## End-to-End Req-to-Resp Flow
+
+```mermaid
+graph TB
+    %% Client Layer
+    Client[🌐 WebFeaturesScan tool<br/>/API Client<br/>External Applications]
+    
+    %% Security & API Layer
+    subgraph "Security & API Gateway"
+        WAF[🛡️ AWS WAF v2<br/>Rate Limiting<br/>DDoS Protection]
+        APIGW[🚪 API Gateway<br/>REST API<br/>/scan endpoint<br/>POST method]
+        APIKey[🔑 API Key<br/>Authentication]
+        UsagePlan[📊 Usage Plan<br/>Throttling & Quotas]
+    end
+    
+    %% Compute Layer
+    subgraph "Lambda Functions"
+        InferLambda[⚡ Inference Lambda<br/>Entry Point]
+        WorkerLambda[⚡ Worker Lambda<br/>AI Processing]
+    end
+    
+    %% AI/ML Layer
+    subgraph "AI/ML Services"
+        Bedrock[🤖 Amazon Bedrock<br/>AI Model Processing]
+        Guardrail[🛡️ Bedrock Guardrails<br/>Content Filtering<br/>HATE, INSULTS, MISCONDUCT<br/>SEXUAL, VIOLENCE, PROMPT_ATTACK]
+    end
+    
+    %% Storage Layer
+    subgraph "Storage Layer"
+        S3Scanora[🪣 WebFeaturesScan S3 Bucket<br/>📁 JSON inputs folder<br/>📁 HTML responses folder<br/>🔒 Encrypted & Versioned]
+        S3CloudTrail[🪣 CloudTrail S3 Bucket<br/>📋 Audit Logs<br/>🔒 Encrypted]
+    end
+    
+    %% Secrets Management
+    subgraph "Secrets Management"
+        SecretsManager[🔐 AWS Secrets Manager<br/>Bedrock API Key<br/>Encrypted Storage]
+    end
+    
+    %% Monitoring & Logging
+    subgraph "Monitoring & Logging"
+        CloudWatch[📊 CloudWatch Logs<br/>• API Gateway Logs<br/>• Lambda Function Logs<br/>• Bedrock Model Logs<br/>• WAF Logs]
+        CloudTrail[📋 AWS CloudTrail<br/>API Audit Trail]
+    end
+    
+    %% IAM Security
+    subgraph "Identity & Access Mgmt"
+        IAM[👤 IAM Roles & Policies<br/>• Lambda Execution Roles<br/>• API Gateway Logging Role<br/>• Bedrock Access Role<br/>• S3 Access Policies<br/>• Secrets Manager Access]
+    end
+    
+    %% Data Flow - Main Request Path
+    Client -->|HTTPS Request<br/>with API Key| WAF
+    WAF -->|Rate Limited<br/>Filtered Requests| APIGW
+    APIGW -->|Validated JSON<br/>Payload| InferLambda
+    InferLambda -->|Async Invocation| WorkerLambda
+    WorkerLambda -->|AI Processing<br/>Request| Bedrock
+    Bedrock -->|Content Filtering| Guardrail
+    
+    %% Storage Operations 
+    InferLambda -->|Store Input JSON| S3Scanora
+	InferLambda -->|Generate Presigned URLs| Client
+    WorkerLambda -->|Store Processing<br/>Results| S3Scanora
+    WorkerLambda -->|Retrieve API Key| SecretsManager
+    
+    %% Monitoring Flows (dashed lines)
+    APIGW -.->|Access Logs| CloudWatch
+    InferLambda -.->|Function Logs| CloudWatch
+    WorkerLambda -.->|Function Logs| CloudWatch
+    Bedrock -.->|Model Invocation Logs| CloudWatch
+    WAF -.->|Security Logs| CloudWatch
+    
+    %% Audit Trail
+    APIGW -.->|API Call Audit| CloudTrail
+    CloudTrail -->|Log Files| S3CloudTrail
+    
+    %% Security & Permissions (dotted lines)
+    IAM -.->|Execution Permissions| InferLambda
+    IAM -.->|Execution Permissions| WorkerLambda
+    IAM -.->|Logging Permissions| APIGW
+    IAM -.->|Bedrock Access| WorkerLambda
+    IAM -.->|S3 Access| InferLambda
+    IAM -.->|S3 Access| WorkerLambda
+    IAM -.->|Secrets Access| WorkerLambda
+    
+    %% Usage Plan Connection
+    APIGW -.->|Rate Limiting<br/>Throttling| UsagePlan
+    APIKey -.->|Authentication| APIGW
+
+    %% Styling
+    classDef clientStyle fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef securityStyle fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef computeStyle fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef aiStyle fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef storageStyle fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    classDef monitorStyle fill:#fff8e1,stroke:#ff6f00,stroke-width:2px
+    classDef iamStyle fill:#ffebee,stroke:#c62828,stroke-width:2px
+    
+    class Client clientStyle
+    class WAF,APIGW,APIKey,UsagePlan securityStyle
+    class InferLambda,WorkerLambda computeStyle
+    class Bedrock,Guardrail aiStyle
+    class S3Scanora,S3CloudTrail,SecretsManager storageStyle
+    class CloudWatch,CloudTrail monitorStyle
+    class IAM iamStyle
+```
