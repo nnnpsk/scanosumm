@@ -68,6 +68,10 @@ After import, run `terraform plan` to see differences. Edit HCL if needed and ru
 
 [![Watch the demo](https://img.youtube.com/vi/3LAqHAcc06I/hqdefault.jpg)](https://www.youtube.com/watch?v=3LAqHAcc06I)
 
+## Architecture
+
+![Architecture](webfeaturesscanreport_architecture.gif)
+
 ## End-to-End Flow: Req-to-Resp
 
 ```mermaid
