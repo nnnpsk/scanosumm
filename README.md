@@ -1,6 +1,6 @@
 # WebFeaturesScanReport: Claude-Powered Browser Compatibility Reporter
 
-This repository contains Terraform and Lambda code used to extend the webfeatures scan tool(https://github.com/nnnpsk/scanora) with an automated HTML compatibility report generator driven by large models hosted via AWS Bedrock (example: Anthropic Claude via Bedrock).
+This repository contains Terraform and Lambda code used to extend the webfeatures scan tool(https://github.com/nnnpsk/scanora) with an automated HTML compatibility report generator driven by LLMs hosted via AWS Bedrock (example: Anthropic Claude via Bedrock).
 
 This README explains the repository layout, the purpose of every Terraform file and, the export helper scripts (how they were created and how to use them, if needed)
 
