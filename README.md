@@ -118,16 +118,19 @@ graph TB
     end
     
     %% Data Flow - Main Request Path
-    Client -->|HTTPS Request<br/>with API Key| WAF
+    Client -->|HTTP Request<br/>with API Key| WAF
     WAF -->|Rate Limited<br/>Filtered Requests| APIGW
     APIGW -->|Validated JSON<br/>Payload| InferLambda
     InferLambda -->|Async Invocation| WorkerLambda
     WorkerLambda -->|AI Processing<br/>Request| Bedrock
     Bedrock -->|Content Filtering| Guardrail
+    InferLambda -->|Presigned URL| APIGW
+    APIGW -->|resp-Presigned URL| WAF
+    WAF -->|HTTP Response<br/>Presigned URL| Client
+
     
     %% Storage Operations 
     InferLambda -->|Store Input JSON| S3Scanora
-	InferLambda -->|Generate Presigned URLs| Client
     WorkerLambda -->|Store Processing<br/>Results| S3Scanora
     WorkerLambda -->|Retrieve API Key| SecretsManager
     
