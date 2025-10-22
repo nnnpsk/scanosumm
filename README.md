@@ -235,3 +235,5 @@ If any error occurs, an **“Internal Error Occurred”** message will be displa
 **Possible Cause:**  
 The input JSON model may be incorrect or malformed.  
 Please ensure your `scano_report_xxxxxxx.json` file follows the expected structure as mentioned here `terraform/src/scanresultmodel.json` before rerunning the command.
+
+**For any other errors or questions, open a GitHub issue**
