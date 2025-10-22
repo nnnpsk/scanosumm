@@ -204,3 +204,34 @@ graph TB
 - **Performance Monitoring**: Lambda metrics, API Gateway metrics, Bedrock metrics
 - **Security Monitoring**: WAF logs, CloudTrail audit logs
 - **Cost Optimization**: Usage plans for API cost control
+
+## How to use
+
+**Step 1:** Install the WebFeatures Scan Tool (developed as part of https://github.com/nnnpsk/scanora)  
+```bash
+npm install -g scanora
+```
+
+**Step 2:** Verify installation and available commands  
+```bash
+scano help
+scano --version   # should display 1.1.0
+```
+
+**Step 3:** Run the scan report command  
+```bash
+scano summ <scano_report_xxxxxxx.json>
+```
+
+Once executed, a **default browser window** opens with a **pre-signed URL** (valid for 3 minutes).  
+The page **auto-refreshes every 10 seconds** until the actual report — generated on **AWS using Claude** — is ready to load.  
+
+If any error occurs, an **“Internal Error Occurred”** message will be displayed.  
+
+### Common Error
+
+**Error Message:**  ```Request failed: HTTP error! Status: 400```
+
+**Possible Cause:**  
+The input JSON model may be incorrect or malformed.  
+Please ensure your `scano_report_xxxxxxx.json` file follows the expected structure as mentioned here `terraform/src/scanresultmodel.json` before rerunning the command.
