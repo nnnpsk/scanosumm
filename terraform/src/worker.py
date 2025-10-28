@@ -5,6 +5,7 @@ import time
 import traceback
 from datetime import datetime
 from botocore.exceptions import ClientError
+from botocore.config import Config
 
 def lambda_handler(event, context):
     print("Worker event:", json.dumps(event, indent=2))
@@ -128,9 +129,14 @@ def lambda_handler(event, context):
     JSON input will be provided next. Parse it and generate the complete HTML report.
     """
     user_prompt = "Use the file text and follow the system prompt."
-
+    
+    config = Config(
+        retries={'max_attempts': 1, 'mode': 'standard'},
+        read_timeout=180,
+        connect_timeout=10
+    )
     model_id = os.environ["BR_MODEL_ID"]
-    client = boto3.client("bedrock-runtime", region_name=region_name)
+    client = boto3.client("bedrock-runtime", region_name=region_name, config=config)
 
     json_as_text = json.dumps(data, indent=2)
     messages = [
@@ -190,5 +196,6 @@ def lambda_handler(event, context):
         pass
 
     return {"status": "completed", "html_s3_key": s3_key_html}
+
 
 
